@@ -20,6 +20,9 @@ data:
     echo "-u $(cat /tmp/admin-password/adminUsername):$(cat /tmp/admin-password/adminPassword)" >> /tmp/curl.cf
 {{ end }}
 
+    echo curl.cf
+    cat /tmp/curl.cf
+
     echo "Waiting for CouchDB service to start..."
     until curl --silent --max-time 5 --head --fail "${BASE_URL}/_up" -K /tmp/curl.cf; do
         printf "%s: CouchDB not up yet. Will try again\n" "$(date)"
@@ -32,6 +35,7 @@ data:
       -d '{"action": "finish_cluster"}' \
       -K /tmp/curl.cf
 
+      sleep 300
     echo "Success!"
 ---
 apiVersion: batch/v1
